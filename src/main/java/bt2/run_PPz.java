@@ -5,6 +5,7 @@
 package bt2;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 /**
@@ -59,8 +60,9 @@ static ArrayList<SinhVien>ds= new ArrayList<>();
         System.out.println("Thuc hien nhap");
         SinhVien sv=null;
         int chon=0;
-        string tieptuc="y";
+        String tieptuc="y";
         Scanner sc =new Scanner (System.in);
+        do{
         System.out.println("cho biet loai sinh vien()IT-1,BIZ-2:");
         chon=sc.nextInt();
         sc.nextLine();
@@ -90,20 +92,41 @@ static ArrayList<SinhVien>ds= new ArrayList<>();
             sv = new SinhVienBiz(Marketing, Sales, hoten, hoten);
         }
         //3.them sinh vien vao danh sach
-        ds.add(sv);
+        if (sv!=null){
+           ds.add(sv); 
+        }
+        sc.nextLine();
+        System.out.println("Tiep tuc (Y/N)?");
+        }while(tieptuc.equalsIgnoreCase("y"));
     }
 
     private static void xuatds() {
         System.out.println("xuat danh sach sv");
-        
-        
+       for(SinhVien sv: ds){
+           sv.xuat();
+       }
     }
 
     private static void xautdssvgioi() {
         System.out.println("xuat danh sach sv gioi");
+         for(SinhVien sv: ds){
+            if(sv.getDiem()>=7.5 && sv.getDiem()<9)
+            {
+                sv.xuat();
+            }
+        }
     }
 
     private static void sapxep() {
         System.out.println("thuc hien sap xep");
+        //dinh nghia tieu chi sap xcep tren SinhVien
+        Comparator<SinhVien> cmp = new Comparator<SinhVien>(){
+            @Override
+            public int compare(SinhVien sv1, SinhVien sc2){
+                return Double.valueOf(sv1.getDiem().compareTo(Double.valueOf(sv2.getDiem()));
+            }
+        };
+        Collections.sort(ds,cmp);
     }
 }
+
